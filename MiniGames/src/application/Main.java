@@ -12,7 +12,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			primaryStage.setTitle("TicTacSudoku"); //Sets the title of the application
+			primaryStage.setTitle("Minigames"); //Sets the title of the application
 			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("Main.fxml")); //Obtains main menu screen
 			Scene scene = new Scene(root,750,500); //Size of the screen
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm()); 
