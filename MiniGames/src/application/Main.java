@@ -14,7 +14,7 @@ public class Main extends Application {
 		try {
 			primaryStage.setTitle("Minigames"); //Sets the title of the application
 			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("Main.fxml")); //Obtains main menu screen
-			Scene scene = new Scene(root,750,500); //Size of the screen
+			Scene scene = new Scene(root,1280,720); //Size of the screen
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm()); 
 			primaryStage.setScene(scene);
 			primaryStage.show();
