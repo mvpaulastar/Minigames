@@ -1,10 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
-	<!-- TODO Add Nodes -->
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+   <children>
+      <Label layoutX="500.0" layoutY="156.0" text="Minigames">
+         <font>
+            <Font name="Monotype Corsiva" size="72.0" />
+         </font>
+      </Label>
+      <Label layoutX="568.0" layoutY="555.0" text="Leaderboards">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="946.0" layoutY="555.0" text="Tic Tac Toe">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Button fx:id="sudokuButton" layoutX="175.0" layoutY="330.0" mnemonicParsing="false">
+         <padding>
+            <Insets top="-1.0" />
+         </padding>
+         <graphic>
+            <ImageView fitHeight="200.0" fitWidth="200.0">
+               <image>
+                  <Image url="@../../images/sudokuicon.jpg" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="leaderboardButton" layoutX="540.0" layoutY="330.0" mnemonicParsing="false">
+         <padding>
+            <Insets top="-1.0" />
+         </padding>
+         <graphic>
+            <ImageView fitHeight="200.0" fitWidth="200.0">
+               <image>
+                  <Image url="@../../images/leaderboardicon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="tictactoeButton" layoutX="905.0" layoutY="330.0" mnemonicParsing="false">
+         <padding>
+            <Insets top="-1.0" />
+         </padding>
+         <graphic>
+            <ImageView fitHeight="200.0" fitWidth="200.0">
+               <image>
+                  <Image url="@../../images/tictactoeicon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label layoutX="235.0" layoutY="555.0" text="Sudoku">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+   </children>
 </AnchorPane>
