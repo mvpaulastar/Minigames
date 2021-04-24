@@ -27,7 +27,7 @@
       </Label>
       <Button fx:id="sudokuButton" layoutX="175.0" layoutY="330.0" mnemonicParsing="false" onAction="#switchSudoku">
          <padding>
-            <Insets top="-1.0" />
+            <Insets bottom="-1.0" left="-1.0" right="-1.0" top="-1.0" />
          </padding>
          <graphic>
             <ImageView fitHeight="200.0" fitWidth="200.0">
@@ -37,9 +37,9 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="leaderboardButton" layoutX="540.0" layoutY="330.0" mnemonicParsing="false">
+      <Button fx:id="leaderboardButton" layoutX="540.0" layoutY="330.0" mnemonicParsing="false" onAction="#switchLeaderboard">
          <padding>
-            <Insets top="-1.0" />
+            <Insets bottom="-1.0" left="-1.0" right="-1.0" top="-1.0" />
          </padding>
          <graphic>
             <ImageView fitHeight="200.0" fitWidth="200.0">
@@ -49,9 +49,9 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="tictactoeButton" layoutX="905.0" layoutY="330.0" mnemonicParsing="false">
+      <Button fx:id="tictactoeButton" layoutX="905.0" layoutY="330.0" mnemonicParsing="false" onAction="#switchTicTacToe">
          <padding>
-            <Insets top="-1.0" />
+            <Insets bottom="-1.0" left="-1.0" right="-1.0" top="-1.0" />
          </padding>
          <graphic>
             <ImageView fitHeight="200.0" fitWidth="200.0">

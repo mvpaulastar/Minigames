@@ -31,5 +31,23 @@ public class MainController {
 		window.setScene(sudokuScene);
 		window.show();
   	}
+  	
+  	public void switchTicTacToe(ActionEvent event) throws IOException {
+  		AnchorPane TicTacToeView = (AnchorPane)FXMLLoader.load(getClass().getResource("TicTac.fxml"));
+		Scene TicTacToeScene = new Scene(TicTacToeView);
+		TicTacToeScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+		window.setScene(TicTacToeScene);
+		window.show();
+  	}
+  	
+  	public void switchLeaderboard(ActionEvent event) throws IOException {
+  		AnchorPane LeaderboardView = (AnchorPane)FXMLLoader.load(getClass().getResource("ScoreScreen.fxml"));
+		Scene LeaderboardScene = new Scene(LeaderboardView);
+		LeaderboardScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+		window.setScene(LeaderboardScene);
+		window.show();
+  	}
     
 }
