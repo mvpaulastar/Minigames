@@ -4,6 +4,7 @@
 package application;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -54,6 +55,13 @@ public class ScoreController implements Initializable {
 	
 	@FXML //This will reset the statistics of users in both the sudoku and tictactoe leaderboards
 	public void resetStats( ActionEvent event ) throws IOException {
+		//Clears the sudokuStats.txt file
+		PrintWriter pw = new PrintWriter("sudokuStats.txt");
+		pw.close();
+		//Clears the tictactoeStats.txt file
+		pw = new PrintWriter("tictactoeStats.txt");
+		pw.close();
+		
 		//Shows confirmation alert of stats being reset.
 		Alert a = new Alert(AlertType.NONE);
 		a.setAlertType(AlertType.CONFIRMATION);// set alert type
