@@ -666,14 +666,7 @@
          </font>
       </TextField>
       <Button fx:id="submitButton" layoutX="947.0" layoutY="235.0" mnemonicParsing="false" text="Submit" />
-      <Button fx:id="homeButton" layoutX="1191.0" layoutY="632.0" mnemonicParsing="false" onAction="#switchHome">
-         <graphic>
-            <ImageView fitHeight="75.0" fitWidth="75.0">
-               <image>
-                  <Image url="@../../images/menu.png" />
-               </image>
-            </ImageView>
-         </graphic>
+      <Button fx:id="homeButton" layoutX="1191.0" layoutY="631.0" mnemonicParsing="false" onAction="#switchHome" prefHeight="75.0" prefWidth="75.0" stylesheets="@../../bin/application/application.css">
          <padding>
             <Insets top="-1.0" />
          </padding>
