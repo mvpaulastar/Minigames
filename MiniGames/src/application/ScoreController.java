@@ -60,7 +60,9 @@ public class ScoreController implements Initializable {
 		pw.close();
 		//Clears the tictactoeStats.txt file
 		pw = new PrintWriter("tictactoeStats.txt");
-		pw.close();
+		pw.close(); 
+		
+		//Reloads the tableviews
 		
 		//Shows confirmation alert of stats being reset.
 		Alert a = new Alert(AlertType.NONE);
