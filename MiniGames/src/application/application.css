@@ -9,3 +9,7 @@
 	-fx-background-size:100% 100%;
 	-fx-background-color: transparent;
 }
+#tictactoeBackground{
+	-fx-background-image:url("../../images/tictactoeBackground.png");
+	-fx-background-size:100% 100%
+}
