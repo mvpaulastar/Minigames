@@ -8,48 +8,48 @@
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ScoreController">
    <children>
-      <Button fx:id="reset" layoutX="1116.0" layoutY="542.0" mnemonicParsing="false" prefHeight="150.0" prefWidth="150.0" stylesheets="@../../bin/application/application.css" />
-      <Button fx:id="menu" layoutX="14.0" layoutY="542.0" mnemonicParsing="false" onAction="#goMainMenu" prefHeight="150.0" prefWidth="150.0" stylesheets="@../../bin/application/application.css" />
-      <Label layoutX="504.0" layoutY="14.0" text="Leaderboards">
+      <Button fx:id="reset" layoutX="552.0" layoutY="155.0" mnemonicParsing="false" onAction="#resetStats" prefHeight="150.0" prefWidth="150.0" stylesheets="@../../bin/application/application.css" />
+      <Button fx:id="menu" layoutX="552.0" layoutY="387.0" mnemonicParsing="false" onAction="#goMainMenu" prefHeight="150.0" prefWidth="150.0" stylesheets="@../../bin/application/application.css" />
+      <Label layoutX="475.0" layoutY="28.0" text="Leaderboards">
          <font>
-            <Font size="48.0" />
+            <Font name="System Bold" size="48.0" />
          </font>
       </Label>
-      <Label layoutX="576.0" layoutY="84.0" text="Sudoku">
-         <font>
-            <Font name="System Bold" size="36.0" />
-         </font>
-      </Label>
-      <Label layoutX="546.0" layoutY="334.0" text="Tic Tac Toe">
+      <Label layoutX="175.0" layoutY="71.0" text="Sudoku">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <TableView fx:id="TicTacToeScores" layoutX="441.0" layoutY="378.0" prefHeight="300.0" prefWidth="400.0">
+      <Label layoutX="924.0" layoutY="71.0" text="Tic Tac Toe">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+      <TableView fx:id="TicTacToeScores" layoutX="793.0" layoutY="134.0" prefHeight="500.0" prefWidth="450.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Player" />
-          <TableColumn prefWidth="85.0" text="Wins" />
-            <TableColumn prefWidth="85.0" text="Losses" />
+          <TableColumn fx:id="tttPlayerCol" prefWidth="75.0" text="Player" />
+          <TableColumn fx:id="tttWinsCol" prefWidth="85.0" text="Wins" />
+            <TableColumn fx:id="tttLossesCol" prefWidth="85.0" text="Losses" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <TableView fx:id="SudokuScores" layoutX="440.0" layoutY="137.0" prefHeight="200.0" prefWidth="400.0">
+      <TableView fx:id="SudokuScores" layoutX="14.0" layoutY="134.0" prefHeight="500.0" prefWidth="450.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Player" />
-          <TableColumn prefWidth="75.0" text="Time Completed" />
+          <TableColumn fx:id="sudPlayerCol" prefWidth="75.0" text="Player" />
+          <TableColumn fx:id="sudTimeCol" prefWidth="75.0" text="Time Completed" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Label layoutX="66.0" layoutY="515.0" text="Menu">
+      <Label layoutX="604.0" layoutY="360.0" text="Menu">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="1148.0" layoutY="515.0" text="Reset Stats">
+      <Label layoutX="584.0" layoutY="134.0" text="Reset Stats">
          <font>
             <Font size="18.0" />
          </font>
