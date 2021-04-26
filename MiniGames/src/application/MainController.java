@@ -33,7 +33,7 @@ public class MainController {
   	}
   	
   	public void switchTicTacToe(ActionEvent event) throws IOException {
-  		AnchorPane TicTacToeView = (AnchorPane)FXMLLoader.load(getClass().getResource("TicTac.fxml"));
+  		AnchorPane TicTacToeView = (AnchorPane)FXMLLoader.load(getClass().getResource("TicTacToe.fxml"));
 		Scene TicTacToeScene = new Scene(TicTacToeView);
 		TicTacToeScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
