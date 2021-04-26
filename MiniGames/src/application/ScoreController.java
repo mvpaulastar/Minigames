@@ -3,10 +3,13 @@
  */
 package application;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +20,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -25,19 +29,19 @@ public class ScoreController implements Initializable {
 	@FXML
 	private AnchorPane mainPane;
     @FXML
-    private TableView<?> SudokuScores;
+    private TableView<Player> SudokuScores;
     @FXML
-    private TableColumn<?, ?> sudPlayerCol;
+    private TableColumn<Player, String> sudPlayerCol;
     @FXML
-    private TableColumn<?, ?> sudTimeCol;
+    private TableColumn<Player, Integer> sudTimeCol;
     @FXML
-    private TableView<?> TicTacToeScores;
+    private TableView<Player> TicTacToeScores;
     @FXML
-    private TableColumn<?, ?> tttWinsCol;
+    private TableColumn<Player, Integer> tttWinsCol;
     @FXML
-    private TableColumn<?, ?> tttLossesCol;
+    private TableColumn<Player, Integer> tttLossesCol;
     @FXML
-    private TableColumn<?, ?> tttPlayerCol;
+    private TableColumn<Player, String> tttPlayerCol;
     @FXML
     private Button reset;
     @FXML
@@ -63,6 +67,12 @@ public class ScoreController implements Initializable {
 		pw.close(); 
 		
 		//Reloads the tableviews
+		mainPane = FXMLLoader.load(getClass().getResource("ScoreScreen.fxml")); //Goes to home pane
+		Scene scene = new Scene(mainPane); //Pane you are going to show
+		Node eventStage = (Node) event.getSource(); //Gets object where button was pressed
+		Stage window = (Stage)eventStage.getScene().getWindow(); //Gets primaryStage Window
+		window.setScene( scene );
+		window.show();
 		
 		//Shows confirmation alert of stats being reset.
 		Alert a = new Alert(AlertType.NONE);
@@ -71,9 +81,59 @@ public class ScoreController implements Initializable {
 		a.show();// show the dialog	
 	}//End method reset stats
 	
+	//Populates a list with sudoku player objects to be displayed on tableview
+	private ArrayList<Player> parseSudPlayerList() throws IOException{
+		File file = new File("sudokuStats.txt"); //Opens file to be read
+		Scanner scan = new Scanner(file ); //Open file to be read
+		String temp; //Temp string to hold and parse file lines
+		ArrayList<Player> list = new ArrayList<Player>(); //List to hold parsed sudoku players
+		
+		while( scan.hasNextLine() ) { //Loops through file to populate arraylist
+			temp = scan.nextLine(); //Obtains a line in the file
+			String[] tempStrArr = temp.split( "\\\\" ); //parses and splits info
+			Player newPlayer = new Player( tempStrArr[0],  Integer.parseInt(tempStrArr[1]) ); //player object to add to list
+			list.add( newPlayer ); //adds new player to arraylist
+		}
+		
+		scan.close(); //close file being read
+		return list;
+	}//End method parseSudPlayerList()
 	
+	//Populates a list with tictactoe player objects to be displayed on tableview
+	private ArrayList<Player> parseTicTacToePlayerList() throws IOException{
+		File file = new File("tictactoeStats.txt"); //Opens file to be read
+		Scanner scan = new Scanner(file ); //Open file to be read
+		String temp; //Temp string to hold and parse file lines
+		ArrayList<Player> list = new ArrayList<Player>(); //List to hold parsed sudoku players
+		
+		while( scan.hasNextLine() ) { //Loops through file to populate arraylist
+			temp = scan.nextLine(); //Obtains a line in the file
+			String[] tempStrArr = temp.split( "\\\\" ); //parses and splits info
+			Player newPlayer = new Player( tempStrArr[0],  Integer.parseInt(tempStrArr[1]), Integer.parseInt(tempStrArr[2])  ); //player object to add to list
+			list.add( newPlayer ); //adds new player to arraylist
+		}
+		
+		scan.close(); //close file being read
+		return list;
+	}//End method parseTicTacToePlayerList
+	
+	//Runs and populates the tableviews on scene startup
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) { //Populates the tableviews of the leaderboard page
+		//Tells the sudoku columns what they will be holding
+		sudPlayerCol.setCellValueFactory( new PropertyValueFactory<Player, String>("Username") );
+		sudTimeCol.setCellValueFactory( new PropertyValueFactory<Player, Integer>("sudTimeCompleted") );
+		//Tells the tictactoe columns what they will be holding
+		tttPlayerCol.setCellValueFactory( new PropertyValueFactory<Player, String>("Username") );
+		tttWinsCol.setCellValueFactory( new PropertyValueFactory<Player, Integer>("tttWins") );
+		tttLossesCol.setCellValueFactory( new PropertyValueFactory<Player, Integer>("tttLosses") );
 		
+		//Grabs the player object list that will be used to populate the tableview
+		try {
+			SudokuScores.getItems().setAll(parseSudPlayerList()); //Grabs the appropriate array list and populates the tableview 
+			TicTacToeScores.getItems().setAll(parseTicTacToePlayerList());//Grabs the appropriate array list and populates the tableview 
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
 	}//End method initialize
 }
