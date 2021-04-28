@@ -71,13 +71,13 @@ public class TicTacController implements Initializable {
 	private Button playerLoginButton;
 	
 	@FXML
-	private Button resetButton;
+	private Button reset;
 	
 	@FXML
 	private Button changeUsersButton;
 	
 	@FXML
-	private Button homeButton;
+	private Button menu;
 	
 	@FXML
 	public TextField p1nameField;
@@ -253,8 +253,6 @@ public class TicTacController implements Initializable {
 		boolean repeat;
 		
 		// start of method
-		messageDisplay.setText("");
-
 		tempFile = new File("temp.txt");
 		if( tempFile.exists() ) {
 			if( !tempFile.delete() ) {
@@ -262,7 +260,7 @@ public class TicTacController implements Initializable {
 				return false;
 			}
 		}
-		pattern = Pattern.compile("([a-zA-Z]+)\s([0-9]+)\s([0-9]+)");
+		pattern = Pattern.compile("([a-zA-Z]+).([0-9]+).([0-9]+)");
 		lineContent = "";
 		repeat = true;
 		try {
@@ -340,6 +338,7 @@ public class TicTacController implements Initializable {
 		return true;
 	}
 	
+	// This method will check tictactoeStats.txt if the username being logged in already exists in the file and saves their stats in memory
 	int findUsername(File file) {
 		// variables declared
 
@@ -356,7 +355,7 @@ public class TicTacController implements Initializable {
 		}
 		try {
 			reader = new BufferedReader( new FileReader(file) );
-			pattern = Pattern.compile("([a-zA-Z]+)\s([0-9]+)\s([0-9]+)");
+			pattern = Pattern.compile("([a-zA-Z]+).([0-9]+).([0-9]+)");
 			lineContent = reader.readLine();
 			while( lineContent != null ) {
 				match = pattern.matcher( lineContent );
@@ -387,15 +386,21 @@ public class TicTacController implements Initializable {
 		}
 		return usersFound;
 	}
-	
+
+	// this method adds a user and their stats into tictactoeStats.txt
 	boolean addUser( File file, String playerName , int wins, int losses ) {
 		// variable declared
 		FileWriter writer;
-
+		String newLine;
+		
 		// Start of method
+		newLine = "\n";
+		if( !file.exists() ) {
+			newLine = "";
+		}
 		try {
 			writer = new FileWriter(file, true);
-			writer.write( playerName + " " + wins + " " + losses + "\n" );
+			writer.write( newLine + playerName + "\\" + wins + "\\" + losses );
 			writer.close();
 		}
 		catch( IOException ouput) {
@@ -454,7 +459,7 @@ public class TicTacController implements Initializable {
 		p1nameField.setDisable(disable); // disables or enables the username text field
 		p2nameField.setDisable(disable); // disables or enables the username text field
 		playerLoginButton.setDisable(disable); // disables or enables the login button
-		resetButton.setDisable(!disable); // enables or disables the reset game button
+		reset.setDisable(!disable); // enables or disables the reset game button
 		changeUsersButton.setDisable(!disable); // enables or disables change users button
 		disableBoard(!disable); // enables or disables board
 		if( disable ) { // checks if login is to be disables
@@ -544,13 +549,9 @@ public class TicTacController implements Initializable {
     
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		board = new int[3][3]; // creates 3D array
+		board = new int[3][3]; // creates 3D array 
 		disableBoard(true); // calls method to enable login buttons and disable game buttons
 		clearBoard(); // calls method to clear the board of all pieces
 		disableLogin(false, "Enter username"); // calls method that enables the login process
-		playerLoginButton.setText("Start Game"); 
-		resetButton.setText("Reset");
-		changeUsersButton.setText("Change Users");
-		homeButton.setText("Home");
 	}
 }

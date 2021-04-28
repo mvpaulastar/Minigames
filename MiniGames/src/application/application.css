@@ -13,8 +13,13 @@
 	-fx-background-image:url("../../images/tictactoeBackground.png");
 	-fx-background-size:100% 100%
 }
-#homeButton{
-	-fx-background-image:url("../../images/menu.png");
+#changeUsersButton{
+	-fx-background-image:url("../../images/changeUsers.png");
+	-fx-background-size:100% 100%;
+	-fx-background-color: transparent;
+}
+#playerLoginButton{
+	-fx-background-image:url("../../images/start.png");
 	-fx-background-size:100% 100%;
 	-fx-background-color: transparent;
 }
