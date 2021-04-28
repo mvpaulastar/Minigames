@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -25,6 +26,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -36,6 +38,7 @@ public class TicTacController implements Initializable {
 	public static String player1; // will store player 1 username string
 	public static String player2; // will store player 2 username string
 	public static int[][] playerStats; // will store each player's stats
+	public static Alert error; // will hold an error message if one is to come up
 	
 	@FXML
 	private Label header;
@@ -256,7 +259,9 @@ public class TicTacController implements Initializable {
 		tempFile = new File("temp.txt");
 		if( tempFile.exists() ) {
 			if( !tempFile.delete() ) {
-				messageDisplay.setText("Error: \"" + tempFile.getName() +"\" exists and was unable to be deleted");// displays error message to user if could not update stats to file
+	    		error.setHeaderText("Error with: " + tempFile.getName() ); // Shows up to the left of the red X
+	    		error.setContentText("The file exists and was unable to be deleted"); // Shows up underneath
+	    		error.showAndWait(); // displays error message to user if could not update stats to file
 				return false;
 			}
 		}
@@ -267,7 +272,9 @@ public class TicTacController implements Initializable {
 			reader = new BufferedReader( new FileReader(file) );
 		}
 		catch( IOException input ) {
-			messageDisplay.setText("Error: could not load contents of \"" + file.getName() + "\"");// displays error message to user if could not update stats to file
+    		error.setHeaderText("Error with: " + file.getName() ); // Shows up to the left of the red X
+    		error.setContentText("Could not load file contents"); // Shows up underneath
+    		error.showAndWait(); // displays error message to user if could not update stats to file
 			return false;
 		}
 		while( repeat ) {
@@ -276,7 +283,9 @@ public class TicTacController implements Initializable {
 			}
 			catch( IOException input ) {
 				reader.close();
-				messageDisplay.setText("Error: could not load contents of \"" + file.getName() + "\"");// displays error message to user if could not update stats to file
+		 		error.setHeaderText("Error with: " + file.getName() ); // Shows up to the left of the red X
+	    		error.setContentText("Could not load file contents"); // Shows up underneath
+	    		error.showAndWait(); ;// displays error message to user if could not update stats to file
 				return false;
 			}
 			if( lineContent != null ) {
@@ -294,14 +303,18 @@ public class TicTacController implements Initializable {
 		}
 		repeat = true;
 		if( !file.delete() ) {
-			messageDisplay.setText("Error: \"" + file.getName() +"\" exists and was unable to be deleted");// displays error message to user if could not update stats to file
+	 		error.setHeaderText("Error with: " + file.getName() ); // Shows up to the left of the red X
+    		error.setContentText("File exists and was unable to be deleted"); // Shows up underneath
+    		error.showAndWait(); ;// displays error message to user if could not update stats to file
 			return false;
 		}
 		try {
 			reader = new BufferedReader( new FileReader(tempFile) );
 		}
 		catch( IOException input ) {
-			messageDisplay.setText("Error: could not load contents of \"" + tempFile.getName() + "\"");// displays error message to user if could not update stats to file
+	 		error.setHeaderText("Error with: " + tempFile.getName() ); // Shows up to the left of the red X
+    		error.setContentText("Could not load file contents"); // Shows up underneath
+    		error.showAndWait(); ;// displays error message to user if could not update stats to file
 			return false;
 		}
 		while( repeat ) {
@@ -310,7 +323,9 @@ public class TicTacController implements Initializable {
 			}
 			catch( IOException input ) {
 				reader.close();
-				messageDisplay.setText("Error: could not load contents of \"" + tempFile.getName() + "\"");// displays error message to user if could not update stats to file
+		 		error.setHeaderText("Error with: " + tempFile.getName() ); // Shows up to the left of the red X
+	    		error.setContentText("Could not load file contents"); // Shows up underneath
+	    		error.showAndWait(); ;// displays error message to user if could not update stats to file
 				return false;
 			}
 			if( lineContent != null ) {
@@ -332,7 +347,9 @@ public class TicTacController implements Initializable {
 			}
 		}
 		if( !tempFile.delete() ) {
-			messageDisplay.setText("Error: \"" + tempFile.getName() +"\" exists and was unable to be deleted");// displays error message to user if could not update stats to file
+	 		error.setHeaderText("Error with: " + tempFile.getName() ); // Shows up to the left of the red X
+    		error.setContentText("File exists and was unable to be deleted"); // Shows up underneath
+    		error.showAndWait(); ;// displays error message to user if could not update stats to file
 			return false;
 		}
 		return true;
@@ -365,7 +382,7 @@ public class TicTacController implements Initializable {
 					playerStats[0][0] = Integer.parseInt(match.group(2) );
 					playerStats[0][1] = Integer.parseInt(match.group(3) );
 				}
-				if( player2.equals( match.group(1) ) ) {
+				if( player2.equals( match.group(1).toString() ) ) {
 					usersFound += 2;
 					playerStats[1][0] = Integer.parseInt(match.group(2) );
 					playerStats[1][1] = Integer.parseInt(match.group(3) );
@@ -381,7 +398,9 @@ public class TicTacController implements Initializable {
 			reader.close();
 		}
 		catch( IOException input ) {
-			messageDisplay.setText("Error: could not load contents of \"tictactoeStats.txt\"");// displays error message to user if could not update stats to file
+	 		error.setHeaderText("Error with: " + file.getName() ); // Shows up to the left of the red X
+    		error.setContentText("Could not load the contents of file"); // Shows up underneath
+    		error.showAndWait(); ;// displays error message to user if could not read stats file
 			return -1;
 		}
 		return usersFound;
@@ -395,7 +414,7 @@ public class TicTacController implements Initializable {
 		
 		// Start of method
 		newLine = "\n";
-		if( !file.exists() ) {
+		if( fileIsEmpty(file) ) {
 			newLine = "";
 		}
 		try {
@@ -404,13 +423,40 @@ public class TicTacController implements Initializable {
 			writer.close();
 		}
 		catch( IOException ouput) {
-			messageDisplay.setText("Error: could not append to \"" + file.getName() + "\"");
+	 		error.setHeaderText("Error with: " + file.getName() ); // Shows up to the left of the red X
+    		error.setContentText("Could not add to file"); // Shows up underneath
+    		error.showAndWait(); ;// displays error message to user if could not read stats file
 			return false;
 		}
 		return true;
 	}
 	
-	
+	// this method will verify if a file is empty
+	boolean fileIsEmpty(File file) {
+		// variable declared
+		BufferedReader reader; // will store buffered reader object
+		String line;
+		
+		// start of method
+		if( file.exists() ) {
+			try {
+				reader = new BufferedReader( new FileReader( file ) );
+				line = reader.readLine();
+				reader.close();
+				if( line != null ) {
+					return false;
+				}
+			}
+			catch( IOException io ) {
+	    		error.setHeaderText("Error with: " + file.getName()); // Shows up to the left of the red X
+	    		error.setContentText("Could not load contents of file"); // Shows up underneath
+	    		error.showAndWait();
+	    		return false;
+			}
+		}
+		return true;
+	}
+
 	// This method enables or disables the game piece buttons
 	//		boolean disable: will be used to disable game piece buttons if true or enable them if false
 	void disableBoard( boolean disable ) {
@@ -553,5 +599,6 @@ public class TicTacController implements Initializable {
 		disableBoard(true); // calls method to enable login buttons and disable game buttons
 		clearBoard(); // calls method to clear the board of all pieces
 		disableLogin(false, "Enter username"); // calls method that enables the login process
+		error = new Alert(AlertType.ERROR); // creates a pop-up window with a pre-loaded red X image on the right and an ok button bottom right
 	}
 }
