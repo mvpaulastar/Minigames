@@ -8,7 +8,7 @@ Group Members include:
 
 Paula Sirisumpund, sol203
 
-Thanhlan Trinh
+Thanhlan Trinh,sao436
 
 Steven Su
 
@@ -22,4 +22,4 @@ Known Bugs: n/a
 
 Login Info: n/a no login required
 
-Requirements: JavaFX, and Java 8
+Requirements: JavaFX, and Java 8, scenebuilder with Java eclipse
