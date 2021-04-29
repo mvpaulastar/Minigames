@@ -16,26 +16,27 @@ import javafx.stage.Stage;
 public class SudokuController {
 
     @FXML
-    private Button checkButton;
+    private Button checkButton;//used to check if sudoku is correct
 
     @FXML
-    private TextField nameField;
+    private TextField nameField;//used to add name
     
     @FXML
-    private Button clearButton;
+    private Button clearButton;//used to clear sudoku
 
     @FXML
-    private Button submitButton;
+    private Button submitButton;//used to submit name for leaderboard
     
     @FXML
-    private Button homeButton;
+    private Button homeButton;//used to let user go to main menu 
 
     @FXML
-    private Label resultLabel;
+    private Label resultLabel;//used to display messages
     
     @FXML
-    private Label timer;
+    private Label timer;//used to time progress
 
+    //fields to enter numbers for sudoku
     @FXML
     private TextField f0;
 
