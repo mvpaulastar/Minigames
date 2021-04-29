@@ -32,6 +32,9 @@ public class SudokuController {
 
     @FXML
     private Label resultLabel;
+    
+    @FXML
+    private Label timer;
 
     @FXML
     private TextField f0;
@@ -203,6 +206,7 @@ public class SudokuController {
 
     @FXML
     private TextField a8;
+    
 
     
     //checks if the game is correct

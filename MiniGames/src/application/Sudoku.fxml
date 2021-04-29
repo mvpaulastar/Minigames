@@ -670,10 +670,22 @@
          <padding>
             <Insets top="-1.0" />
          </padding>
+         <graphic>
+            <ImageView fitHeight="75.0" fitWidth="75.0">
+               <image>
+                  <Image url="@../../images/menu.png" />
+               </image>
+            </ImageView>
+         </graphic>
       </Button>
       <Label fx:id="resultLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="745.0" layoutY="284.0" prefHeight="171.0" prefWidth="460.0" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="36.0" />
+         </font>
+      </Label>
+      <Label fx:id="timer" alignment="CENTER" contentDisplay="CENTER" layoutX="834.0" layoutY="73.0" prefHeight="35.0" prefWidth="280.0" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="24.0" />
          </font>
       </Label>
    </children>
