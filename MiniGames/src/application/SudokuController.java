@@ -318,8 +318,8 @@ public class SudokuController {
         		resultLabel.setText("Congratulations!\nYou have solved the puzzle!");
         		//stops timer
        		 long end = System.currentTimeMillis();
-   			 float sec = (end - start) / 1000F;
-   			float minutes=sec/60F;
+   			 float sec = (end - start) / 1000F;//milliseconds to seconds
+   			float minutes=sec/60F;//seconds to minutes
    			 timer.setText(minutes + "minutes");
         	}
         	//if didn't solve the puzzle
