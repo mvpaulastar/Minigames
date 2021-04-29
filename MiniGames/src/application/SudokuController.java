@@ -14,8 +14,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class SudokuController {
-
-    @FXML
+	
+	public static String userName;//lets user add in name
+	
+	public static long start;//to start timer
+    
+	@FXML
     private Button checkButton;//used to check if sudoku is correct
 
     @FXML
@@ -208,7 +212,28 @@ public class SudokuController {
     @FXML
     private TextField a8;
     
-
+    @FXML
+	void login(ActionEvent event) {
+		// variable declared
+		
+		// start of method
+		userName = nameField.getText(); // grabs player's name
+		if( userName.length() == 0 ) { // checks if either text field is blank
+			resultLabel.setText("Please fill out player name"); // displays to the user that there is a blank text field
+			return; // ends method
+		} else {
+		 start = System.currentTimeMillis();//starts timer for sudoku
+		 for (int i = 0; i <5; i++) {
+	         try {
+				Thread.sleep(60);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	      }
+		}
+		
+		}
     
     //checks if the game is correct
     public void checkResult(ActionEvent event) {
@@ -291,6 +316,11 @@ public class SudokuController {
         	//if solved the puzzle
         	if(Arrays.equals(userAnswers, solution) == true) {
         		resultLabel.setText("Congratulations!\nYou have solved the puzzle!");
+        		//stops timer
+       		 long end = System.currentTimeMillis();
+   			 float sec = (end - start) / 1000F;//milliseconds to seconds
+   			float minutes=sec/60F;//seconds to minutes
+   			 timer.setText(minutes + "minutes");
         	}
         	//if didn't solve the puzzle
         	else {
