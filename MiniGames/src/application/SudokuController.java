@@ -233,6 +233,8 @@ public class SudokuController {
 						e.printStackTrace();
 				}
 			}
+			resultLabel.setText("Start!"); // Start prompt
+			nameField.clear();
 		}
 		
 	}
