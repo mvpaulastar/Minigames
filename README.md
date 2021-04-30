@@ -1,4 +1,4 @@
-Please run this application with JavaFX, and Java 8 on the Eclipse IDE.
+Please run this application with JavaFX, and Java 8 on the Eclipse IDE. Download the minigames folder and open it as an eclipse project or clone it from the main branch of the repository through EGIt with this URl: https://github.com/mvpaulastar/Minigames.git
 
 Group Project: Minigames
 
@@ -10,10 +10,6 @@ Paula Sirisumpund, sol203
 
 Thanhlan Trinh,sao436
 
-Steven Su
-
-
-Ernan Frausto
 
 Our app, Minigames, is a application that allows users to play the Sudoku, and Tic-Tac-Toe minigames with a fully functional leaderboard. How fast you can complete Sudoku puzzles
 and how many wins/losses you have in the leaderboards determines how well you do in the leaderboard.
