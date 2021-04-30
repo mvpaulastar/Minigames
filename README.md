@@ -9,6 +9,7 @@ Group Members include:
 Paula Sirisumpund, sol203;
 Steven Su, fjp163;
 Thanhlan Trinh, sao436;
+Ernan Jovany Frausto, pfa535;
 
 
 Our app, Minigames, is a application that allows users to play the Sudoku, and Tic-Tac-Toe minigames with a fully functional leaderboard. How fast you can complete Sudoku puzzles
