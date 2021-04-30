@@ -41,9 +41,6 @@ public class TicTacController implements Initializable {
 	public static Alert error; // will hold an error message if one is to come up
 	
 	@FXML
-	private Label header;
-	
-	@FXML
 	private Button piece1button;
 	
 	@FXML
@@ -246,6 +243,9 @@ public class TicTacController implements Initializable {
 		return true;
 	}
 	
+	// This method will create a new username file
+	//		File file: this is the file object that has the name of the file that will be created
+	// Returns true for success or false for failure
 	boolean createNewUserFile( File file ) throws IOException {
 		// variable declared
 		File tempFile; // will store temp file object for tictactoeStats.txt
@@ -257,19 +257,19 @@ public class TicTacController implements Initializable {
 		
 		// start of method
 		tempFile = new File("temp.txt");
-		if( tempFile.exists() ) {
-			if( !tempFile.delete() ) {
+		if( tempFile.exists() ) { // checks if the temp file exists
+			if( !tempFile.delete() ) { // if so, it will be deleted and checked for a failure
 	    		error.setHeaderText("Error with: " + tempFile.getName() ); // Shows up to the left of the red X
 	    		error.setContentText("The file exists and was unable to be deleted"); // Shows up underneath
 	    		error.showAndWait(); // displays error message to user if could not update stats to file
 				return false;
 			}
 		}
-		pattern = Pattern.compile("([a-zA-Z]+).([0-9]+).([0-9]+)");
+		pattern = Pattern.compile("([a-zA-Z]+).([0-9]+).([0-9]+)"); // this pattern specifies the capture groups we need from file line
 		lineContent = "";
 		repeat = true;
 		try {
-			reader = new BufferedReader( new FileReader(file) );
+			reader = new BufferedReader( new FileReader(file) ); // creates a reader object for username file
 		}
 		catch( IOException input ) {
     		error.setHeaderText("Error with: " + file.getName() ); // Shows up to the left of the red X
@@ -277,9 +277,9 @@ public class TicTacController implements Initializable {
     		error.showAndWait(); // displays error message to user if could not update stats to file
 			return false;
 		}
-		while( repeat ) {
+		while( repeat ) { // loop will iterate until boolean variable is false
 			try {
-				lineContent = reader.readLine();
+				lineContent = reader.readLine(); // reads line from username file
 			}
 			catch( IOException input ) {
 				reader.close();
@@ -288,28 +288,28 @@ public class TicTacController implements Initializable {
 	    		error.showAndWait(); ;// displays error message to user if could not update stats to file
 				return false;
 			}
-			if( lineContent != null ) {
-				match = pattern.matcher( lineContent );
-				match.find();
-				if( !addUser( tempFile, match.group(1), Integer.parseInt( match.group(2) ), Integer.parseInt( match.group(3) ) ) ) {
-					reader.close();
-					return false;
+			if( lineContent != null ) { // checks if line read was not empty
+				match = pattern.matcher( lineContent ); // the string will be loaded into the matcher
+				match.find(); // will store the capture groups into match object
+				if( !addUser( tempFile, match.group(1), Integer.parseInt( match.group(2) ), Integer.parseInt( match.group(3) ) ) ) { // writes user info into temp file and checks for failure
+					reader.close(); // closes reader if failure
+					return false; // returns false
 				}
 			}
-			else {
-				repeat = false;
-				reader.close();
+			else { // happens if line read was empty
+				repeat = false; // sets loop condition to false (to break loop)
+				reader.close(); // closes file reader
 			}
 		}
-		repeat = true;
-		if( !file.delete() ) {
+		repeat = true; // resets loop condition to true ( to start new loop )
+		if( !file.delete() ) { // deletes original file and checks for error
 	 		error.setHeaderText("Error with: " + file.getName() ); // Shows up to the left of the red X
     		error.setContentText("File exists and was unable to be deleted"); // Shows up underneath
     		error.showAndWait(); ;// displays error message to user if could not update stats to file
 			return false;
 		}
 		try {
-			reader = new BufferedReader( new FileReader(tempFile) );
+			reader = new BufferedReader( new FileReader(tempFile) ); // creates a reader object for temp file
 		}
 		catch( IOException input ) {
 	 		error.setHeaderText("Error with: " + tempFile.getName() ); // Shows up to the left of the red X
@@ -317,7 +317,7 @@ public class TicTacController implements Initializable {
     		error.showAndWait(); ;// displays error message to user if could not update stats to file
 			return false;
 		}
-		while( repeat ) {
+		while( repeat ) { // loop will iterate until boolean variable is false
 			try {
 				lineContent = reader.readLine();
 			}
@@ -328,34 +328,36 @@ public class TicTacController implements Initializable {
 	    		error.showAndWait(); ;// displays error message to user if could not update stats to file
 				return false;
 			}
-			if( lineContent != null ) {
-				match = pattern.matcher( lineContent );
-				match.find();
+			if( lineContent != null ) { // checks if temp file's line read was not empty
+				match = pattern.matcher( lineContent ); // the string will be loaded into the matcher
+				match.find(); // will store the capture groups into match object
 				if( !( player1.equals( match.group(1) ) || player2.equals( match.group(1) ) ) ) { // checks if pattern group 0 (username) does not match either current one
-					if( !addUser( file, match.group(1), Integer.parseInt( match.group(2) ), Integer.parseInt( match.group(3) ) ) ) {
-						reader.close();
-						return false;
+					if( !addUser( file, match.group(1), Integer.parseInt( match.group(2) ), Integer.parseInt( match.group(3) ) ) ) { // adds the user found into username file and then checks for failure
+						reader.close(); // if failed, close reader
+						return false; // returns false for failure
 					}
 				}
 			}
 			else {
 				reader.close();
-				if( !( addUser( file, player1, playerStats[0][0], playerStats[0][1] ) && addUser( file, player2, playerStats[1][0], playerStats[1][1] ) ) ){
-					return false;
+				if( !( addUser( file, player1, playerStats[0][0], playerStats[0][1] ) && addUser( file, player2, playerStats[1][0], playerStats[1][1] ) ) ){ // adds the currents users into username file and checks for error
+					return false; // returns false for error
 				}				
-				repeat = false;
+				repeat = false; // boolean variable will be false to break loop
 			}
 		}
-		if( !tempFile.delete() ) {
+		if( !tempFile.delete() ) { // The temp file will be deleted and checked for failure
 	 		error.setHeaderText("Error with: " + tempFile.getName() ); // Shows up to the left of the red X
     		error.setContentText("File exists and was unable to be deleted"); // Shows up underneath
     		error.showAndWait(); ;// displays error message to user if could not update stats to file
-			return false;
+			return false; // returns false for failure
 		}
-		return true;
+		return true; // returns true for success
 	}
 	
 	// This method will check tictactoeStats.txt if the username being logged in already exists in the file and saves their stats in memory
+	//		File file: This file object will be used to read its contents
+	// Returns a code for each user found: -1 for an error reading file, 0 for no matches, 1 for player 1 match, 2 for player 2 match, 3 for both player match
 	int findUsername(File file) {
 		// variables declared
 
@@ -367,37 +369,37 @@ public class TicTacController implements Initializable {
 		
 		// start of method
 		usersFound = 0;
-		if( !file.exists() ) {
-			return usersFound;
+		if( !file.exists() ) { // checks if file does not exist
+			return usersFound; // returns 0 since there are no users yet
 		}
 		try {
 			reader = new BufferedReader( new FileReader(file) );
-			pattern = Pattern.compile("([a-zA-Z]+).([0-9]+).([0-9]+)");
-			lineContent = reader.readLine();
-			while( lineContent != null ) {
-				match = pattern.matcher( lineContent );
-				match.find();
-				if( player1.equals( match.group(1).toString() ) ) {
+			pattern = Pattern.compile("([a-zA-Z]+).([0-9]+).([0-9]+)"); // this pattern will specify what needs to be saved in capture groups
+			lineContent = reader.readLine(); // the line read from the file will be stored into a string
+			while( lineContent != null ) { // this loop will iterate until EOF
+				match = pattern.matcher( lineContent ); // the string will be loaded into the matcher
+				match.find(); // the matcher will store capture groups from pattern
+				if( player1.equals( match.group(1).toString() ) ) { // checks if player one was found in the file
 					usersFound += 1;
-					playerStats[0][0] = Integer.parseInt(match.group(2) );
-					playerStats[0][1] = Integer.parseInt(match.group(3) );
+					playerStats[0][0] = Integer.parseInt(match.group(2) ); // copies the wins into memory
+					playerStats[0][1] = Integer.parseInt(match.group(3) ); // copies the losses into memory
 				}
-				if( player2.equals( match.group(1).toString() ) ) {
+				if( player2.equals( match.group(1).toString() ) ) { // checks if player two was found in the file
 					usersFound += 2;
-					playerStats[1][0] = Integer.parseInt(match.group(2) );
-					playerStats[1][1] = Integer.parseInt(match.group(3) );
+					playerStats[1][0] = Integer.parseInt(match.group(2) ); // copies the wins into memory
+					playerStats[1][1] = Integer.parseInt(match.group(3) ); // copies the losses into memory
 				}
-				if( usersFound == 3 ) {
-					lineContent = null;
-					reader.close();
+				if( usersFound == 3 ) { // checks if all players were found
+					lineContent = null; // nulls the string to break out of loop
+					reader.close(); // closes file reader
 				}
 				else {
-					lineContent = reader.readLine();
+					lineContent = reader.readLine(); // reads next line of file and stores contents into string
 				}
 			}
 			reader.close();
 		}
-		catch( IOException input ) {
+		catch( IOException input ) { // this catch statement will catch any error with file IO
 	 		error.setHeaderText("Error with: " + file.getName() ); // Shows up to the left of the red X
     		error.setContentText("Could not load the contents of file"); // Shows up underneath
     		error.showAndWait(); ;// displays error message to user if could not read stats file
@@ -407,22 +409,27 @@ public class TicTacController implements Initializable {
 	}
 
 	// this method adds a user and their stats into tictactoeStats.txt
+	//		File file: this is the file object that will have user stats stored into
+	//		String playerName: this string will hold the name of the player to write into file
+	//		int wins: this is the number of wins of the player to be added into file
+	//		int losses: this is the number of losses of the player to be added into file
+	//	Returns true if method was able to write stats into file or false if there was an error
 	boolean addUser( File file, String playerName , int wins, int losses ) {
 		// variable declared
-		FileWriter writer;
-		String newLine;
+		FileWriter writer; // will hold file writer object
+		String newLine; // this string may store a newline character depending on file conditions
 		
 		// Start of method
-		newLine = "\n";
-		if( fileIsEmpty(file) ) {
-			newLine = "";
+		newLine = "\n"; // adds newline character to string
+		if( fileIsEmpty(file) ) { // the file will be checked if it is empty
+			newLine = ""; // empties out string
 		}
 		try {
-			writer = new FileWriter(file, true);
-			writer.write( newLine + playerName + "\\" + wins + "\\" + losses );
-			writer.close();
+			writer = new FileWriter(file, true); // opens out file to write (append) 
+			writer.write( newLine + playerName + "\\" + wins + "\\" + losses ); // writes in the username and their stats into file
+			writer.close(); // closes file writer
 		}
-		catch( IOException ouput) {
+		catch( IOException ouput) { // This exception will catch error with file IO
 	 		error.setHeaderText("Error with: " + file.getName() ); // Shows up to the left of the red X
     		error.setContentText("Could not add to file"); // Shows up underneath
     		error.showAndWait(); ;// displays error message to user if could not read stats file
@@ -431,20 +438,22 @@ public class TicTacController implements Initializable {
 		return true;
 	}
 	
-	// this method will verify if a file is empty
+	// this method will verify if a file exists, is empty, or contains lines.
+	//		File file: this file object will be used to read its contents if it exists
+	// Returns false if file exists and is empty or cannot be read. Returns true if file does not exist or is not empty and is readable 
 	boolean fileIsEmpty(File file) {
 		// variable declared
 		BufferedReader reader; // will store buffered reader object
 		String line;
 		
 		// start of method
-		if( file.exists() ) {
-			try {
-				reader = new BufferedReader( new FileReader( file ) );
-				line = reader.readLine();
-				reader.close();
-				if( line != null ) {
-					return false;
+		if( file.exists() ) { // checks if file exists
+			try { // this batch of code will try to read from a file
+				reader = new BufferedReader( new FileReader( file ) ); // creates a buffered reader object
+				line = reader.readLine(); // reads line from text file 
+				reader.close(); // closes reader upon reading first line
+				if( line != null ) { // checks if reader read anything
+					return false; // returns false if file is empty
 				}
 			}
 			catch( IOException io ) {
@@ -593,7 +602,7 @@ public class TicTacController implements Initializable {
 		window.show();
 	}
     
-	@Override
+	@Override // this method will be called when the Tic Tac Toe game is started each time
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		board = new int[3][3]; // creates 3D array 
 		disableBoard(true); // calls method to enable login buttons and disable game buttons
