@@ -665,7 +665,7 @@
             <Font size="24.0" />
          </font>
       </TextField>
-      <Button fx:id="submitButton" layoutX="947.0" layoutY="235.0" mnemonicParsing="false" text="Submit" />
+      <Button fx:id="submitButton" layoutX="947.0" layoutY="235.0" mnemonicParsing="false" onAction="#login" text="Submit" />
       <Button fx:id="homeButton" layoutX="1191.0" layoutY="631.0" mnemonicParsing="false" onAction="#switchHome" prefHeight="75.0" prefWidth="75.0" stylesheets="@../../bin/application/application.css">
          <padding>
             <Insets top="-1.0" />
