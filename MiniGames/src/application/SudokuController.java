@@ -1,6 +1,7 @@
 package application;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,30 +16,32 @@ import javafx.stage.Stage;
 
 public class SudokuController {
 	
-	public static String userName;//lets user add in name
+	public static String userName; //lets user add in name
 	
-	public static long start;//to start timer
+	public static long start; //to start timer
+	
+	private static DecimalFormat df2 = new DecimalFormat("#.##"); //sets timer to two decimal places.
     
 	@FXML
-    private Button checkButton;//used to check if sudoku is correct
+    private Button checkButton; //used to check if sudoku is correct
 
     @FXML
-    private TextField nameField;//used to add name
+    private TextField nameField; //used to add name
     
     @FXML
-    private Button clearButton;//used to clear sudoku
+    private Button clearButton; //used to clear sudoku
 
     @FXML
-    private Button submitButton;//used to submit name for leaderboard
+    private Button submitButton; //used to submit name for leaderboard
     
     @FXML
-    private Button homeButton;//used to let user go to main menu 
+    private Button homeButton; //used to let user go to main menu 
 
     @FXML
-    private Label resultLabel;//used to display messages
+    private Label resultLabel; //used to display messages
     
     @FXML
-    private Label timer;//used to time progress
+    private Label timer; //used to time progress
 
     //fields to enter numbers for sudoku
     @FXML
@@ -222,18 +225,17 @@ public class SudokuController {
 			resultLabel.setText("Please fill out player name"); // displays to the user that there is a blank text field
 			return; // ends method
 		} else {
-		 start = System.currentTimeMillis();//starts timer for sudoku
-		 for (int i = 0; i <5; i++) {
-	         try {
-				Thread.sleep(60);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			start = System.currentTimeMillis();//starts timer for sudoku
+			for (int i = 0; i <5; i++) {
+				try {
+					Thread.sleep(60);
+				} catch (InterruptedException e) {
+						e.printStackTrace();
+				}
 			}
-	      }
 		}
 		
-		}
+	}
     
     //checks if the game is correct
     public void checkResult(ActionEvent event) {
@@ -310,17 +312,16 @@ public class SudokuController {
         	//convert string input array into int array
         	for(int i = 0; i < inputString.length; i++) {
         		userAnswers[i] = Integer.parseInt(inputString[i]);
-        		System.out.print(userAnswers[i] + ", ");
         	}
         	
         	//if solved the puzzle
         	if(Arrays.equals(userAnswers, solution) == true) {
         		resultLabel.setText("Congratulations!\nYou have solved the puzzle!");
         		//stops timer
-       		 long end = System.currentTimeMillis();
-   			 float sec = (end - start) / 1000F;//milliseconds to seconds
-   			float minutes=sec/60F;//seconds to minutes
-   			 timer.setText(minutes + "minutes");
+        		long end = System.currentTimeMillis();
+        		float sec = (end - start) / 1000F;//milliseconds to seconds
+        		float minutes = sec/60F;//seconds to minutes
+        		timer.setText(df2.format(minutes) + " minutes");
         	}
         	//if didn't solve the puzzle
         	else {
@@ -331,8 +332,6 @@ public class SudokuController {
         	//if there are any blanks
         	resultLabel.setText("Sorry!\nThere are some blanks!\nPlease Try Again!");
         }
-        
-    	
     }
     
     //Clears all fields
