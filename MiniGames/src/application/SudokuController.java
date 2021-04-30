@@ -1,13 +1,8 @@
 package application;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -29,8 +24,6 @@ public class SudokuController {
 	public static String userName; //lets user add in name
 	
 	public static long start; //to start timer
-	
-	private static DecimalFormat df2 = new DecimalFormat("#.##"); //sets timer to two decimal places.
     
 	@FXML
     private Button checkButton; //used to check if sudoku is correct
