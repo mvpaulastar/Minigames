@@ -7,8 +7,11 @@ Group Name: Group 5: Super Professional
 Group Members include:
 
 Paula Sirisumpund, sol203;
+
 Steven Su, fjp163;
+
 Thanhlan Trinh, sao436;
+
 Ernan Jovany Frausto, pfa535;
 
 
