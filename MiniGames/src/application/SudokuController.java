@@ -1,8 +1,18 @@
 package application;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
+import java.util.regex.Pattern;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -218,15 +228,20 @@ public class SudokuController {
     @FXML
 	void login(ActionEvent event) {
 		// variable declared
-		
+    	String pattern = "[a-zA-Z]+";
+    	
 		// start of method
 		userName = nameField.getText(); // grabs player's name
 		if( userName.length() == 0 ) { // checks if either text field is blank
 			resultLabel.setText("Please fill out player name"); // displays to the user that there is a blank text field
 			return; // ends method
-		} else {
+		}else if ( !Pattern.matches( pattern,  userName )) { // checks if either username does not match the regex pattern
+			resultLabel.setText("Player names must consist of only alphabetical characters"); // displays to the user that they can only use alphabetical characters
+			return; // ends method
+		}
+		else { //Sudoku timer
 			start = System.currentTimeMillis();//starts timer for sudoku
-			for (int i = 0; i <5; i++) {
+			for (int i = 0; i < 5; i++) {
 				try {
 					Thread.sleep(60);
 				} catch (InterruptedException e) {
@@ -240,7 +255,7 @@ public class SudokuController {
 	}
     
     //checks if the game is correct
-    public void checkResult(ActionEvent event) {
+    public void checkResult(ActionEvent event) throws IOException {
     	//array of correct answers
     	int[] solution = new int[] {5, 9, 4, 6, 1, 6, 7, 9, 4, 1, 2, 5, 8, 8, 4, 2, 6, 3, 7, 9, 6, 3, 8, 2, 1, 1, 5, 6, 7, 
     			3, 8, 4, 7, 1, 9, 5, 6, 2, 3, 3, 7, 6, 4, 9, 5, 2, 4, 8, 1, 2, 9, 7, 9, 7, 3, 1, 4};
@@ -321,9 +336,11 @@ public class SudokuController {
         		resultLabel.setText("Congratulations!\nYou have solved the puzzle!");
         		//stops timer
         		long end = System.currentTimeMillis();
-        		float sec = (end - start) / 1000F;//milliseconds to seconds
-        		float minutes = sec/60F;//seconds to minutes
-        		timer.setText(df2.format(minutes) + " minutes");
+        		int sec = Math.round((end - start) / 1000F);//milliseconds to seconds
+        		timer.setText( sec + " seconds");
+        		
+        		//Adds info to file
+        		addPlayer( sec );
         	}
         	//if didn't solve the puzzle
         	else {
@@ -407,4 +424,54 @@ public class SudokuController {
 		window.show();
 	}
     
+    //Adds a player to the sudokuStats.txt file Written by Paula Sirisumpund
+    public void addPlayer( int time ) throws IOException{
+    	File file = new File("sudokuStats.txt"); //Opens file to be read
+    	file.createNewFile(); //if file doesn't exist
+		Scanner scan = new Scanner(file ); //Open file to be read
+		String temp; //Temp string to hold and parse file lines
+		ArrayList<String> list = new ArrayList<String>(); //List to hold parsed sudoku players
+		
+		if( playerExists() == true ) {
+			while( scan.hasNextLine() ) { //Loops through file to populate arraylist 
+				temp = scan.nextLine(); //Obtains a line in the file
+				String[] tempStrArr = temp.split( "\\\\" ); //parses and splits info
+				if( tempStrArr[0].equals(userName) ) { //if user exists
+					temp = tempStrArr[0] + "\\" + time; //if equal to username
+				}
+				list.add( temp ); //adds new player to arraylist
+			}
+			 scan.close();//close scanner
+			 
+				//Rewrites the file with updated stats
+			 FileWriter fWriter = new FileWriter( file );
+			 for( int i = 0; i < list.size(); i ++ ) { //writes to file
+				 fWriter.write(list.get(i) + "\n");
+			 }
+			 fWriter.close();//close file
+		}else {
+			FileWriter printer = new FileWriter( file, true ); //Printer
+			printer.write(userName + "\\" + time + "\n");
+			printer.close();//close file being written
+		}
+    }//End method add player
+    
+    //Checks if user exists written by Paula Sirisumpund
+    public boolean playerExists() throws IOException {
+    	File file = new File("sudokuStats.txt"); //Opens file to be read
+    	file.createNewFile(); //if file doesn't exist
+		Scanner scan = new Scanner(file ); //Open file to be read
+		String temp; //Temp string to hold and parse file lines
+		
+		while( scan.hasNextLine() ) { //Loops through file to check if user exists
+			temp = scan.nextLine();
+			String[] tempStrArr = temp.split( "\\\\" ); //parses and splits info
+			if( tempStrArr[0].equals(userName) ) { //If user already exists exit
+				scan.close(); //close file being read
+				return true; //Exit method user already exists
+			}
+		}//end while
+		scan.close(); //close file being read
+		return false;
+    }
 }
